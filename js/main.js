@@ -9,7 +9,13 @@
       '/assets/background.jpg',
       '/assets/background2.jpg',
       '/assets/background3.jpg',
-      '/assets/background4.jpg'
+      '/assets/background4.jpg',
+      '/assets/backgroundN1.jpg',
+      '/assets/backgroundN2.jpg',
+      '/assets/backgroundN3.png',
+      '/assets/backgroundN4.jpg',
+      '/assets/backgroundN5.jpg',
+      '/assets/backgroundN6.jpg'
     ];
     const randomIndex = Math.floor(Math.random() * bgImages.length);
     const selectedBg = bgImages[randomIndex];
@@ -55,7 +61,13 @@
       '/assets/background.jpg',
       '/assets/background2.jpg',
       '/assets/background3.jpg',
-      '/assets/background4.jpg'
+      '/assets/background4.jpg',
+      '/assets/backgroundN1.jpg',
+      '/assets/backgroundN2.jpg',
+      '/assets/backgroundN3.png',
+      '/assets/backgroundN4.jpg',
+      '/assets/backgroundN5.jpg',
+      '/assets/backgroundN6.jpg'
     ];
 
     // Determine which background is currently active
