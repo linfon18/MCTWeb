@@ -1,0 +1,213 @@
+/* ========== MCT Website - Download Page Styles ========== */
+
+/* ===== Download Hero ===== */
+.download-hero {
+  min-height: 40vh;
+}
+
+/* ===== Download Section ===== */
+.download-section {
+  background: transparent;
+  padding-top: 2rem;
+}
+
+.download-grid {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.download-card {
+  background: var(--bg2);
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.download-card:hover {
+  border-color: rgba(0, 212, 170, 0.3);
+  box-shadow: var(--shadow-lg);
+}
+
+.download-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: var(--glass-border);
+}
+
+.download-header .os-icon {
+  font-size: 2.5rem;
+}
+
+.download-header .os-info h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.download-archs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.arch-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  border: var(--glass-border);
+  transition: all var(--transition-fast);
+}
+
+.arch-row:hover {
+  border-color: var(--accent);
+}
+
+.arch-name {
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+}
+
+/* ===== Version Subtitle ===== */
+.version-subtitle {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  opacity: 0.7;
+}
+
+/* ===== Version Alert ===== */
+.version-alert {
+  max-width: var(--max);
+  margin: 0 auto 2rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.version-alert strong {
+  color: var(--warning);
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.version-alert p {
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.version-alert a {
+  color: var(--accent);
+}
+
+.alert-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ===== Deprecated Alert ===== */
+.deprecated-alert {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.deprecated-alert strong {
+  color: var(--danger);
+}
+
+/* ===== LTS Section ===== */
+.lts-section {
+  background: var(--bg2);
+  border-top: var(--glass-border);
+  border-bottom: var(--glass-border);
+}
+
+.lts-downloads {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* ===== Deprecated Section ===== */
+.deprecated-section {
+  background: transparent;
+}
+
+.deprecated-section .section-header h2 {
+  color: var(--muted);
+}
+
+.deprecated-downloads {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* ===== Derivative Section ===== */
+.derivative-section {
+  background: var(--bg2);
+  border-top: var(--glass-border);
+}
+
+.derivative-downloads {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== Download Fallback ===== */
+.download-fallback {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+.download-fallback a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .download-grid { 
+    grid-template-columns: 1fr; 
+  }
+}
+
+@media (max-width: 768px) {
+  .lts-downloads,
+  .deprecated-downloads {
+    flex-direction: column;
+    align-items: center;
+  }
+  .lts-downloads .btn,
+  .deprecated-downloads .btn {
+    width: 100%;
+    max-width: 400px;
+  }
+}
