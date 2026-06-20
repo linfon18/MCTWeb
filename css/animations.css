@@ -979,9 +979,26 @@
 }
 
 .wave-separator svg {
-  width: 100%;
+  width: 200%;
   height: 100%;
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.wave-separator .wave-back {
+  animation: waveScroll 12s linear infinite;
+  opacity: 0.4;
+}
+
+.wave-separator .wave-front {
+  animation: waveScroll 8s linear infinite;
+}
+
+@keyframes waveScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .wave-separator.wave-reverse {
