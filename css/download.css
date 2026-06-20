@@ -7,8 +7,9 @@
 
 /* ===== Download Section ===== */
 .download-section {
-  background: transparent;
+  background: var(--bg2);
   padding-top: 2rem;
+  border-top: var(--glass-border);
 }
 
 .download-grid {
@@ -134,9 +135,7 @@
 
 /* ===== LTS Section ===== */
 .lts-section {
-  background: var(--bg2);
-  border-top: var(--glass-border);
-  border-bottom: var(--glass-border);
+  /* inherits .download-section base style */
 }
 
 .lts-downloads {
@@ -150,7 +149,7 @@
 
 /* ===== Deprecated Section ===== */
 .deprecated-section {
-  background: transparent;
+  /* inherits .download-section base style */
 }
 
 .deprecated-section .section-header h2 {
@@ -168,8 +167,7 @@
 
 /* ===== Derivative Section ===== */
 .derivative-section {
-  background: var(--bg2);
-  border-top: var(--glass-border);
+  /* inherits .download-section base style */
 }
 
 .derivative-downloads {

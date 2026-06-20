@@ -11,17 +11,6 @@
   padding: 6rem 2rem 4rem;
 }
 
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
 
 .hero-content {
   position: relative;
@@ -48,16 +37,61 @@
   margin-bottom: 1.5rem;
 }
 
+.hero-text {
+  position: relative;
+  z-index: 2;
+  padding: 2.5rem 3rem;
+  background: transparent;
+  border-radius: var(--radius-lg);
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
+  transition: color 0.3s ease;
+}
+
+.hero-text .hero-badge {
+  margin-top: 0;
+}
+
+/* Light bg -> dark text */
+.hero-text.hero-text-light h1,
+.hero-text.hero-text-light .subtitle,
+.hero-text.hero-text-light .hero-stat .label {
+  color: var(--ink);
+}
+
+.hero-text.hero-text-light .gradient-text {
+  background: linear-gradient(135deg, var(--ink) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-text.hero-text-light .hero-stat .num {
+  color: var(--accent);
+}
+
+.hero-text.hero-text-light .hero-badge {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  color: var(--accent);
+}
+
+.hero-text.hero-text-light .hero-btns .btn {
+  color: var(--ink);
+}
+
 .hero h1 {
   font-size: 3.5rem;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.1;
   margin-bottom: 1.5rem;
 }
 
 .hero .subtitle {
+  font-weight: 600;
   font-size: 1.15rem;
-  color: var(--muted);
   margin-bottom: 2.5rem;
   max-width: 500px;
   line-height: 1.8;

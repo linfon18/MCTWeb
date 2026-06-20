@@ -45,6 +45,56 @@
     }
   }
 
+  // ===== Hero Text Adaptive Color =====
+  function initHeroTextColor() {
+    const heroText = document.querySelector('.hero-text');
+    if (!heroText) return;
+
+    // Load all background images and sample brightness
+    const bgImages = [
+      '/assets/background.jpg',
+      '/assets/background2.jpg',
+      '/assets/background3.jpg',
+      '/assets/background4.jpg'
+    ];
+
+    // Determine which background is currently active
+    const bgVar = getComputedStyle(document.documentElement).getPropertyValue('--bg-image').trim();
+    // Extract filename from url("...") or url(...)
+    const match = bgVar.match(/url\(["']?(.*?)["']?\)/);
+    const currentBg = match ? match[1] : bgImages[0];
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      // Sample at reduced resolution for performance
+      const w = 64, h = 64;
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      const data = ctx.getImageData(0, 0, w, h).data;
+
+      // Calculate average luminance
+      let totalLuminance = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i + 1], b = data[i + 2];
+        // Standard luminance formula
+        totalLuminance += 0.299 * r + 0.587 * g + 0.114 * b;
+      }
+      const avgLuminance = totalLuminance / (w * h);
+
+      // If bright (luminance > 140), use dark text
+      if (avgLuminance > 140) {
+        heroText.classList.add('hero-text-light');
+      } else {
+        heroText.classList.remove('hero-text-light');
+      }
+    };
+    img.src = currentBg;
+  }
+
   // ===== Scroll Progress Bar =====
   function initScrollProgress() {
     const progressBar = document.getElementById('scroll-progress');
@@ -395,9 +445,135 @@
     });
   }
 
+  // ===== Cursor Glow Trail =====
+  function initCursorGlow() {
+    const glow = document.getElementById('cursor-glow');
+    if (!glow || window.matchMedia('(max-width: 768px)').matches) return;
+
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!glow.classList.contains('active')) {
+        glow.classList.add('active');
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      glow.classList.remove('active');
+    });
+
+    function animate() {
+      glowX += (mouseX - glowX) * 0.08;
+      glowY += (mouseY - glowY) * 0.08;
+      glow.style.left = glowX + 'px';
+      glow.style.top = glowY + 'px';
+      requestAnimationFrame(animate);
+    }
+    animate();
+  }
+
+  // ===== Hero Parallax on Mouse Move =====
+  function initHeroParallax() {
+    const heroContent = document.getElementById('hero-content');
+    if (!heroContent || window.matchMedia('(max-width: 1024px)').matches) return;
+
+    const hero = heroContent.closest('.hero');
+    if (!hero) return;
+
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      heroContent.style.transform = `translate(${x * -12}px, ${y * -8}px)`;
+
+      const orbs = hero.querySelectorAll('.orb');
+      orbs.forEach((orb, i) => {
+        const speed = (i + 1) * 8;
+        orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+      });
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      heroContent.style.transition = 'transform 0.5s ease';
+      heroContent.style.transform = 'translate(0, 0)';
+      hero.querySelectorAll('.orb').forEach(orb => {
+        orb.style.transition = 'transform 0.5s ease';
+        orb.style.transform = 'translate(0, 0)';
+      });
+      setTimeout(() => {
+        heroContent.style.transition = '';
+        hero.querySelectorAll('.orb').forEach(orb => { orb.style.transition = ''; });
+      }, 500);
+    });
+  }
+
+  // ===== Text Decode Animation =====
+  function initTextDecode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*';
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const originalText = el.dataset.originalText;
+          if (!originalText || el.dataset.decoded === 'true') return;
+
+          el.dataset.decoded = 'true';
+          el.textContent = '';
+
+          const charSpans = [];
+          for (let i = 0; i < originalText.length; i++) {
+            const span = document.createElement('span');
+            span.className = 'decode-char';
+            span.style.animationDelay = (i * 0.04) + 's';
+            el.appendChild(span);
+            charSpans.push(span);
+          }
+
+          let step = 0;
+          const totalSteps = 8;
+
+          function scramble() {
+            charSpans.forEach((span, i) => {
+              if (step < totalSteps) {
+                if (Math.random() < 0.4 + (step / totalSteps) * 0.5) {
+                  span.textContent = chars[Math.floor(Math.random() * chars.length)];
+                } else {
+                  span.textContent = originalText[i] || '';
+                }
+              } else {
+                span.textContent = originalText[i] || '';
+              }
+            });
+            step++;
+            if (step <= totalSteps) {
+              setTimeout(scramble, 60);
+            }
+          }
+
+          scramble();
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.section-header h2').forEach(h2 => {
+      const text = h2.textContent.trim();
+      if (text && !h2.dataset.originalText) {
+        h2.dataset.originalText = text;
+        observer.observe(h2);
+      }
+    });
+  }
+
   // ===== Initialize All =====
   function init() {
     initRandomBackground();
+    initHeroTextColor();
     initTheme();
     initScrollProgress();
     initNavbar();
@@ -414,6 +590,9 @@
     initActiveNav();
     initRipple();
     initCardGlow();
+    initCursorGlow();
+    initHeroParallax();
+    initTextDecode();
   }
 
   if (document.readyState === 'loading') {
