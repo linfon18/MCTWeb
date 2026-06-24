@@ -1,0 +1,263 @@
+/* ========== MCT Website - Tutorial Page Styles ========== */
+
+/* ===== Tutorial Section ===== */
+.tutorial-section {
+  background: var(--bg);
+  padding: 2rem 2rem 6rem;
+}
+
+.tutorial-container {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 3rem;
+}
+
+/* ===== Sidebar ===== */
+.tutorial-sidebar {
+  position: sticky;
+  top: 84px;
+  height: fit-content;
+}
+
+.tutorial-sidebar .sidebar-nav {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.tutorial-sidebar .sidebar-nav h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  color: var(--muted);
+}
+
+.tutorial-sidebar .sidebar-nav ul {
+  list-style: none;
+}
+
+.tutorial-sidebar .sidebar-nav li {
+  margin-bottom: 0.25rem;
+}
+
+.tutorial-sidebar .sidebar-nav a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.tutorial-sidebar .sidebar-nav a:hover,
+.tutorial-sidebar .sidebar-nav a.active {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+/* ===== Main Content ===== */
+.tutorial-main .doc-section {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.tutorial-main h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tutorial-main p {
+  color: var(--ink-dim);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+/* Tip Box (shared with docs) */
+.tutorial-main .tip-box {
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.tutorial-main .warning-box {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid var(--warning);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* ===== Role Tabs ===== */
+.role-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--bg3);
+  border-radius: var(--radius-md);
+  padding: 0.35rem;
+  width: fit-content;
+}
+
+.role-tab {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.role-tab:hover {
+  color: var(--ink);
+}
+
+.role-tab.active {
+  background: linear-gradient(135deg, var(--accent), #00b894);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 212, 170, 0.3);
+}
+
+.role-content.hidden {
+  display: none;
+}
+
+/* ===== Step Blocks ===== */
+.step-block {
+  margin-bottom: 2rem;
+}
+
+.step-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.step-img {
+  max-width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ===== Highlight Classes ===== */
+.hl-blue {
+  color: #38bdf8;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6), 0 0 20px rgba(56, 189, 248, 0.3);
+}
+
+.hl-yellow {
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.step-note {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+/* ===== Mode Selection Cards ===== */
+.mode-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.mode-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--bg3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.mode-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px rgba(0, 212, 170, 0.2), 0 0 30px rgba(0, 212, 170, 0.08);
+  color: var(--ink);
+}
+
+.mode-card .mode-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  transition: transform var(--transition-normal);
+}
+
+.mode-card:hover .mode-icon {
+  transform: scale(1.15);
+}
+
+.mode-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mode-card p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .tutorial-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .tutorial-sidebar {
+    position: static;
+  }
+
+  .tutorial-main .doc-section {
+    padding: 1.5rem;
+  }
+
+  .mode-cards {
+    grid-template-columns: 1fr;
+  }
+}
