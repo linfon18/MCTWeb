@@ -183,6 +183,13 @@
   padding-left: 1rem;
 }
 
+.et-beta-notice {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 1rem;
+  padding-left: 1rem;
+}
+
 /* ===== Mode Selection Cards ===== */
 .mode-cards {
   display: grid;
