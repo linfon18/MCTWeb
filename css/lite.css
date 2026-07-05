@@ -1,0 +1,261 @@
+/* ========== MCT Website - Lite Page Styles ========== */
+
+/* ===== Lite Hero ===== */
+.lite-hero {
+  min-height: 40vh;
+}
+
+/* ===== Lite Section ===== */
+.lite-section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* ===== Warn Banner ===== */
+.warn-banner {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2.5rem;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.warn-banner .warn-icon {
+  font-size: 1.6rem;
+  margin-right: 0.5rem;
+}
+
+.warn-banner .warn-title {
+  color: var(--warning);
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.warn-banner p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.7;
+}
+
+.warn-banner a {
+  color: var(--accent);
+}
+
+/* ===== Lite Hero Block ===== */
+.lite-hero-block {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.lite-hero-block h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.lite-hero-block .lite-tagline {
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+/* ===== Version Info Card ===== */
+.lite-version-card {
+  background: var(--bg2);
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  position: relative;
+  overflow: hidden;
+}
+
+.lite-version-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+}
+
+.lite-version-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.lite-version-header .ver-badge {
+  background: var(--accent-glow);
+  border: 1px solid rgba(0, 212, 170, 0.3);
+  color: var(--accent);
+  font-family: 'JetBrainsMono', 'GeistMono', monospace;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-md);
+}
+
+.lite-version-header h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.lite-specs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.lite-spec {
+  background: var(--bg);
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.lite-spec:hover {
+  border-color: var(--accent);
+}
+
+.lite-spec .spec-value {
+  font-family: 'JetBrainsMono', 'GeistMono', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.lite-spec .spec-label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.lite-version-note {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.lite-version-note strong {
+  color: var(--ink-dim);
+}
+
+/* ===== Screenshots ===== */
+.lite-screenshots {
+  margin-bottom: 2.5rem;
+}
+
+.lite-screenshots h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+}
+
+.screenshot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.screenshot-card {
+  background: var(--bg2);
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.screenshot-card:hover {
+  border-color: rgba(0, 212, 170, 0.3);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.screenshot-card img {
+  width: 100%;
+  display: block;
+}
+
+.screenshot-card .caption {
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ===== Download CTA ===== */
+.lite-download {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.lite-download .ver-info {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.lite-download .ver-info strong {
+  font-family: 'JetBrainsMono', 'GeistMono', monospace;
+  color: var(--accent);
+}
+
+.lite-download .btn {
+  font-size: 1.1rem;
+  padding: 0.9rem 2.5rem;
+}
+
+.lite-download .btn .dl-size {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-left: 0.5rem;
+}
+
+/* ===== Derivative Tag (reused from download page) ===== */
+.tag {
+  display: inline-block;
+  background: var(--accent-glow);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 212, 170, 0.3);
+  margin-bottom: 0.75rem;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .lite-section {
+    padding: 1.5rem 1rem 3rem;
+  }
+  .lite-version-card {
+    padding: 1.5rem;
+  }
+  .lite-specs {
+    grid-template-columns: 1fr 1fr;
+  }
+  .screenshot-grid {
+    grid-template-columns: 1fr;
+  }
+  .warn-banner {
+    padding: 1rem 1.2rem;
+  }
+}
