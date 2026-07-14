@@ -445,6 +445,94 @@ section {
   font-size: 1.1rem;
 }
 
+.music-control {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: -0.75rem;
+}
+
+.music-control.is-floating {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1200;
+  margin-left: 0;
+}
+
+.music-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.72);
+  background: rgba(255,255,255,0.92);
+  color: #1a1a2e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+
+.music-toggle:hover {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.24);
+}
+
+.music-toggle svg {
+  width: 19px;
+  height: 19px;
+  display: block;
+}
+
+.music-control.is-paused .music-toggle {
+  opacity: 0.72;
+}
+
+.music-volume-panel {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 156px;
+  padding: 0.75rem 0.85rem;
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  background: var(--bg-glass);
+  color: var(--ink);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+}
+
+.music-control:hover .music-volume-panel,
+.music-control:focus-within .music-volume-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.music-volume-panel span {
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.music-volume-panel input {
+  width: 92px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
 /* ===== Footer ===== */
 footer {
   background: var(--bg-glass);
@@ -720,5 +808,19 @@ footer {
   
   section { 
     padding: 4rem 1.5rem; 
+  }
+
+  .music-control.is-floating {
+    top: 10px;
+    right: 10px;
+  }
+
+  .music-toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .music-volume-panel {
+    top: 44px;
   }
 }

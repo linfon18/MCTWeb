@@ -523,7 +523,6 @@
     });
   }
 
-  // ===== Text Decode Animation =====
   function initTextDecode() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*';
 
@@ -582,6 +581,403 @@
     });
   }
 
+  function initTutorialTabs() {
+    document.querySelectorAll('.role-tab').forEach(tab => {
+      if (tab.dataset.tabReady === 'true') return;
+      tab.dataset.tabReady = 'true';
+      tab.addEventListener('click', () => {
+        const group = tab.closest('.role-tabs');
+        const section = tab.closest('.doc-section');
+        if (!group || !section) return;
+
+        group.querySelectorAll('.role-tab').forEach(item => item.classList.remove('active'));
+        tab.classList.add('active');
+        section.querySelectorAll('.role-content').forEach(content => content.classList.add('hidden'));
+        const target = section.querySelector('#' + tab.dataset.target);
+        if (target) target.classList.remove('hidden');
+      });
+    });
+  }
+
+  function initGlobalMusic() {
+    if (window.MCTGlobalMusic) {
+      window.MCTGlobalMusic.mountControl();
+      window.MCTGlobalMusic.updateControl();
+      return;
+    }
+
+    const audio = document.createElement('audio');
+    const stateKey = 'mct-background-music-state-v3';
+    const syncKey = 'mct-background-music-sync-v3';
+    const defaultState = {
+      currentTime: 0,
+      volume: 0.2,
+      paused: false,
+      updatedAt: Date.now(),
+      userPaused: false
+    };
+
+    let state = readState();
+    let saveTimer = null;
+    let timeSyncTimer = null;
+    let internalSeek = false;
+
+    audio.src = '/assets/backmusic.mp3';
+    audio.loop = true;
+    audio.preload = 'auto';
+    audio.volume = clampVolume(state.volume);
+    audio.dataset.globalMusic = 'true';
+
+    const control = document.createElement('li');
+    control.className = 'music-control';
+    control.innerHTML = '<button class="music-toggle" type="button" aria-label="暂停背景音乐" title="暂停背景音乐"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M9 18.5a3 3 0 1 1-1-2.236V6.5a1 1 0 0 1 .724-.961l9-2.571A1 1 0 0 1 19 3.93V15.5a3 3 0 1 1-2-2.83V8.326l-7 2V18.5Z"/></svg></button><div class="music-volume-panel" role="group" aria-label="背景音乐音量"><span>音量</span><input class="music-volume" type="range" min="0" max="100" step="1" aria-label="背景音乐音量"></div>';
+
+    const toggle = control.querySelector('.music-toggle');
+    const volume = control.querySelector('.music-volume');
+    volume.value = Math.round(audio.volume * 100);
+
+    document.body.appendChild(audio);
+    mountControl();
+
+    updateControl();
+    audio.addEventListener('loadedmetadata', () => {
+      applySavedTime();
+      if (!state.userPaused) {
+        startPlayback(false);
+      }
+    });
+
+    audio.addEventListener('play', () => {
+      state.paused = false;
+      updateControl();
+      saveStateNow();
+      broadcastState();
+    });
+
+    audio.addEventListener('pause', () => {
+      state.paused = true;
+      updateControl();
+      saveStateNow();
+      broadcastState();
+    });
+
+    audio.addEventListener('volumechange', () => {
+      state.volume = audio.volume;
+      volume.value = Math.round(audio.volume * 100);
+      saveStateSoon();
+      broadcastState();
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (internalSeek) return;
+      state.currentTime = audio.currentTime;
+      saveStateSoon();
+    });
+
+    toggle.addEventListener('click', () => {
+      if (state.userPaused || audio.paused) {
+        state.userPaused = false;
+        state.paused = false;
+        startPlayback(true);
+      } else {
+        state.userPaused = true;
+        state.paused = true;
+        audio.pause();
+      }
+    });
+
+    volume.addEventListener('input', () => {
+      audio.volume = clampVolume(Number(volume.value) / 100);
+    });
+
+    window.addEventListener('storage', (event) => {
+      if (event.key !== syncKey || !event.newValue) return;
+      const nextState = parseState(event.newValue);
+      if (!nextState || nextState.updatedAt <= state.updatedAt) return;
+      applyExternalState(nextState);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        saveStateNow();
+      } else if (!state.paused) {
+        applyElapsedProgress();
+        startPlayback(false);
+      }
+    });
+
+    window.addEventListener('pagehide', saveStateNow);
+    window.addEventListener('beforeunload', saveStateNow);
+    document.addEventListener('click', resumeAfterGesture, { once: true });
+    document.addEventListener('keydown', resumeAfterGesture, { once: true });
+
+    window.MCTGlobalMusic = {
+      mountControl,
+      updateControl
+    };
+
+    audio.load();
+    applySavedTime();
+    if (!state.userPaused) {
+      startPlayback(false);
+    }
+    timeSyncTimer = window.setInterval(() => {
+      if (!audio.paused) {
+        state.currentTime = audio.currentTime;
+        saveStateNow();
+      }
+    }, 1000);
+
+    function startPlayback(fromUserGesture) {
+      state.userPaused = false;
+      state.paused = false;
+      updateControl();
+      const playPromise = audio.play();
+      if (playPromise && typeof playPromise.catch === 'function') {
+        playPromise.catch(() => {
+          if (!fromUserGesture) {
+            updateControl();
+          }
+        });
+      }
+      saveStateNow();
+      broadcastState();
+    }
+
+    function resumeAfterGesture() {
+      if (!state.userPaused && audio.paused) {
+        startPlayback(true);
+      }
+    }
+
+    function applyExternalState(nextState) {
+      state = nextState;
+      audio.volume = clampVolume(state.volume);
+      if (Math.abs(audio.currentTime - state.currentTime) > 1.5) {
+        internalSeek = true;
+        audio.currentTime = Math.max(0, Number(state.currentTime) || 0);
+        setTimeout(() => { internalSeek = false; }, 0);
+      }
+      if (state.userPaused) {
+        state.paused = true;
+        audio.pause();
+      } else {
+        startPlayback(false);
+      }
+      updateControl();
+    }
+
+    function applyElapsedProgress() {
+      const latestState = readState();
+      state = latestState;
+      if (!state.userPaused && state.updatedAt) {
+        const elapsed = Math.max(0, (Date.now() - state.updatedAt) / 1000);
+        let nextTime = (Number(state.currentTime) || 0) + elapsed;
+        if (Number.isFinite(audio.duration) && audio.duration > 0) {
+          nextTime %= audio.duration;
+        }
+        audio.currentTime = nextTime;
+        state.currentTime = nextTime;
+      }
+      audio.volume = clampVolume(state.volume);
+      updateControl();
+    }
+
+    function updateControl() {
+      const paused = state.userPaused;
+      control.classList.toggle('is-paused', paused);
+      toggle.setAttribute('aria-label', paused ? '播放背景音乐' : '暂停背景音乐');
+      toggle.setAttribute('title', paused ? '播放背景音乐' : '暂停背景音乐');
+      toggle.setAttribute('aria-pressed', String(!paused));
+    }
+
+    function readState() {
+      return parseState(localStorage.getItem(stateKey)) || defaultState;
+    }
+
+    function parseState(raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') return null;
+        return {
+          currentTime: Math.max(0, Number(parsed.currentTime) || 0),
+          volume: clampVolume(Number(parsed.volume)),
+          paused: Boolean(parsed.userPaused || parsed.paused),
+          updatedAt: Number(parsed.updatedAt) || 0,
+          userPaused: Boolean(parsed.userPaused || parsed.paused)
+        };
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function saveStateSoon() {
+      window.clearTimeout(saveTimer);
+      saveTimer = window.setTimeout(saveStateNow, 120);
+    }
+
+    function saveStateNow() {
+      state.currentTime = audio.currentTime || state.currentTime || 0;
+      state.volume = audio.volume;
+      state.paused = state.userPaused;
+      state.updatedAt = Date.now();
+      localStorage.setItem(stateKey, JSON.stringify(state));
+    }
+
+    function broadcastState() {
+      localStorage.setItem(syncKey, JSON.stringify({
+        currentTime: audio.currentTime || state.currentTime || 0,
+        volume: audio.volume,
+        paused: state.userPaused,
+        updatedAt: Date.now(),
+        userPaused: state.userPaused
+      }));
+    }
+
+    function mountControl() {
+      if (!audio.isConnected) {
+        document.body.appendChild(audio);
+      }
+
+      const navLinks = document.querySelector('nav .nav-links');
+      if (navLinks) {
+        control.classList.remove('is-floating');
+        navLinks.appendChild(control);
+      } else {
+        control.classList.add('is-floating');
+        document.body.appendChild(control);
+      }
+    }
+
+    function applySavedTime() {
+      const latestState = readState();
+      state = latestState;
+      if (!state.userPaused && state.updatedAt) {
+        const elapsed = Math.max(0, (Date.now() - state.updatedAt) / 1000);
+        state.currentTime = (Number(state.currentTime) || 0) + elapsed;
+      }
+      if (state.currentTime > 0) {
+        const nextTime = Number.isFinite(audio.duration) && audio.duration > 0 ? state.currentTime % audio.duration : state.currentTime;
+        try {
+          audio.currentTime = nextTime;
+        } catch (error) {
+          audio.addEventListener('canplay', () => {
+            audio.currentTime = nextTime;
+          }, { once: true });
+        }
+      }
+      audio.volume = clampVolume(state.volume);
+      volume.value = Math.round(audio.volume * 100);
+    }
+
+    function clampVolume(value) {
+      if (!Number.isFinite(value)) return defaultState.volume;
+      return Math.min(1, Math.max(0, value));
+    }
+
+    window.addEventListener('pagehide', () => {
+      if (timeSyncTimer) window.clearInterval(timeSyncTimer);
+    });
+  }
+
+  function initLocalPageNavigation() {
+    if (window.MCTPageNavigationReady) return;
+    window.MCTPageNavigationReady = true;
+
+    const pageCache = new Map();
+    syncHeadAssets(document);
+
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link || !shouldHandleLink(link)) return;
+
+      event.preventDefault();
+      navigateTo(link.href, true);
+    });
+
+    window.addEventListener('popstate', () => {
+      navigateTo(window.location.href, false);
+    });
+
+    async function navigateTo(url, pushState) {
+      try {
+        const html = await loadPage(url);
+        const parser = new DOMParser();
+        const nextDocument = parser.parseFromString(html, 'text/html');
+        const nextBody = nextDocument.body;
+        if (!nextBody) {
+          window.location.href = url;
+          return;
+        }
+
+        const keptAudio = document.querySelector('audio[data-global-music="true"]');
+        const keptControl = document.querySelector('.music-control');
+        document.title = nextDocument.title;
+        syncHeadAssets(nextDocument);
+        document.body.replaceWith(nextBody);
+        if (keptAudio) document.body.appendChild(keptAudio);
+        if (pushState) history.pushState(null, '', url);
+        init();
+        if (keptControl && !document.querySelector('.music-control')) {
+          window.MCTGlobalMusic && window.MCTGlobalMusic.mountControl();
+        }
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      } catch (error) {
+        window.location.href = url;
+      }
+    }
+
+    async function loadPage(url) {
+      if (pageCache.has(url)) return pageCache.get(url);
+      const response = await fetch(url, {
+        headers: { 'X-Requested-With': 'fetch' }
+      });
+      if (!response.ok) throw new Error('Page request failed');
+      const html = await response.text();
+      pageCache.set(url, html);
+      return html;
+    }
+
+    function shouldHandleLink(link) {
+      const url = new URL(link.href, window.location.href);
+      if (url.origin !== window.location.origin) return false;
+      if (link.target && link.target !== '_self') return false;
+      if (link.hasAttribute('download')) return false;
+      if (url.hash && url.pathname === window.location.pathname) return false;
+      return ['/', '/index', '/download', '/lite', '/docs', '/tutorial', '/about'].includes(url.pathname);
+    }
+
+    function syncHeadAssets(nextDocument) {
+      const commonStyles = new Set(['css/main.css', 'css/animations.css']);
+
+      if (nextDocument === document) {
+        document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+          const href = link.getAttribute('href');
+          if (!href) return;
+
+          const normalizedPath = new URL(href, window.location.href).pathname.replace(/^\//, '');
+          if (!commonStyles.has(normalizedPath)) {
+            link.dataset.pageStyle = 'true';
+          }
+        });
+        return;
+      }
+
+      document.querySelectorAll('link[data-page-style]').forEach(link => link.remove());
+      nextDocument.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        const normalizedPath = new URL(href, window.location.href).pathname.replace(/^\//, '');
+        if (commonStyles.has(normalizedPath)) return;
+
+        const nextLink = link.cloneNode(true);
+        nextLink.dataset.pageStyle = 'true';
+        document.head.appendChild(nextLink);
+      });
+    }
+  }
+
   // ===== Initialize All =====
   function init() {
     initRandomBackground();
@@ -605,6 +1001,9 @@
     initCursorGlow();
     initHeroParallax();
     initTextDecode();
+    initTutorialTabs();
+    initGlobalMusic();
+    initLocalPageNavigation();
   }
 
   if (document.readyState === 'loading') {
