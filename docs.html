@@ -31,6 +31,7 @@
       <ul class="nav-links">
         <li><a href="/">首页</a></li>
         <li><a href="/download">下载</a></li>
+        <li><a href="/lite">Lite</a></li>
         <li><a href="/docs" class="active">文档</a></li>
         <li><a href="/tutorial">联机教程</a></li>
         <li><a href="/about">关于</a></li>
@@ -247,6 +248,7 @@
         <div class="doc-section anim-fade-up" id="faq">
           <h2>常见问题</h2>
           <p>⚠ 此部分内容由官方知识库整理，文档信息如有错误/缺失，请到 <a href="https://github.com/MCZLF/MinecraftConnectTool/issues" target="_blank">GitHub</a> 上提交 issue。</p>
+          <p style="font-size:0.82rem;color:var(--muted);margin-top:-0.5rem;">基于 由U233 整理的 MCT排障手册v2.0 | 手册更新时间: 2026-06-13 | Web更新时间: 2026-07-14</p>
           <p><strong>🧩 通用搜索关键词</strong>：复制报错末尾 <strong>连续 3-4 个英文单词</strong> 到本页 Ctrl+F 可瞬间定位。</p>
 
           <h3>0. P2PNetWork Login Error</h3>
@@ -255,168 +257,160 @@
           </div>
 
           <h3>1️⃣ No further information</h3>
-          <p><strong>症状：</strong>连接时弹出含 further 字样提示。</p>
-          <p><strong>根因：</strong>房主端口 / 提示码填错，或自己手滑。</p>
+          <p><strong>根因：</strong>房主提供的端口或提示码错误，或是自己输错了</p>
           <p><strong>对策：</strong>双人核对后再敲，别盲猜！若确认无误，请查看联机工具箱是否报错。</p>
 
           <h3>2️⃣ 登入失败，无效的会话</h3>
-          <p><strong>根因：</strong>正版验证挡路。</p>
+          <p><strong>根因：</strong>正版验证导致的</p>
           <p><strong>对策：</strong></p>
           <ul class="doc-list">
-            <li><strong>方案 A：</strong>全部换 <strong>外置登录</strong>（LittleSkin）</li>
-            <li><strong>方案 B：</strong>装 <strong>自定义局域网联机 Mod</strong> 关闭验证</li>
+            <li>外置登录 或 加 自定义局域网联机 Mod 以关闭验证</li>
           </ul>
 
-          <h3>2.1 文件含病毒提示</h3>
-          <p><strong>根因：</strong>Windows Defender 误杀。</p>
-          <p><strong>对策：</strong>进入程序的 <strong>设置 → WDF 加白</strong>，点一下即可。</p>
+          <h3>2.1 开启核心后提示：无法成功完成操作，因为文件包含病毒或潜在的垃圾软件</h3>
+          <p><strong>根因：</strong>可能是被杀软误杀了呢喵~</p>
+          <p><strong>对策：</strong>可能是 Windows 安全中心捣的鬼，在"设置"中选中 <strong>WDF 加白</strong>；如果有其他杀毒软件，请将软件加入扫描排除项</p>
 
           <h3>3️⃣ 未知主机</h3>
-          <p><strong>根因：</strong>中文冒号 <code>：</code> 混入。</p>
-          <p><strong>对策：</strong>一律使用英文 <code>:</code>，或直接点复制按钮。</p>
+          <p><strong>根因：</strong>IP 格式错误，请勿使用中文冒号，或填写错误</p>
+          <p><strong>对策：</strong>仔细检查，一律使用英文 <code>:</code></p>
 
-          <h3>4️⃣ 是否支持其他启动器？</h3>
-          <p><strong>答：</strong>完全 OK！工具与启动器零耦合，喜欢哪个用哪个。</p>
+          <h3>4️⃣ 可以使用其他启动器吗？</h3>
+          <p><strong>答：</strong>可以</p>
 
           <h3>5️⃣ Invalid characters in username</h3>
-          <p><strong>根因：</strong>昵称违规。</p>
-          <p><strong>规范：</strong>3-16 位，仅英文大小写、数字、下划线，禁中文。</p>
+          <p><strong>完整报错：</strong>Internal Exception: java.lang.IllegalStateException: Invalid characters in username</p>
+          <p><strong>根因：</strong>用户名不合规</p>
+          <p><strong>对策：</strong>更改用户名，要求仅可出现英文大小写、数字、英文下划线，3-16 位，不可使用中文用户名。详见 Minecraft 玩家 ID 命名规范。</p>
 
           <h3>6️⃣ Connection refused: getsockopt</h3>
-          <p><strong>根因：</strong>P2P 打洞中。</p>
-          <p><strong>对策：</strong>等 30-60s；若仍拒绝，换预览版本再试。</p>
+          <p><strong>根因：</strong>P2P 正在打洞，请稍等片刻</p>
+          <p><strong>对策：</strong>长时间无响应请使用预览版本</p>
 
-          <h3>7️⃣ 进服后秒退 / 掉虚空 / 区块不刷</h3>
-          <p><strong>快速修复：</strong>房主把 <strong>渲染距离 & 模拟距离</strong> 调到 2 区块，全员站稳后再拉高。</p>
+          <h3>7️⃣ 进入后一直掉线（或加载不出地形 / 掉虚空等类似描述）</h3>
+          <p><strong>快速修复：</strong>尝试房主把 <strong>渲染距离和模拟距离</strong> 调到最低，加入方进入后稳定后再调回来</p>
 
-          <h3>7.1 高延迟偶发卡掉</h3>
+          <h3>7.1 进入虽然不掉线，但延迟很高，偶尔就会卡掉线</h3>
           <ul class="doc-list">
-            <li>检查路由稳定性，重启光猫 / 路由</li>
-            <li>关闭游戏特效，降低视距</li>
-            <li>精简 Mod 列表，避免带宽爆炸</li>
+            <li>检查你的网络稳定性，尝试重启路由器或更换更稳定的网络连接</li>
+            <li>在游戏设置中降低图形和网络相关的选项，比如关闭一些不必要的特效，减少延迟</li>
+            <li>房主端请调低视距，双方启用网络优化，如果有过多的 Mod，请按需减少，可能是 Mod 数量过多的原因</li>
           </ul>
 
           <h3>8️⃣ 联机皮肤不显示</h3>
-          <p><strong>捷径：</strong>直接外置登录 → LittleSkin 一键换肤；或装万能皮肤补丁 Mod。</p>
+          <p><strong>推荐：</strong>直接外置登录，在皮肤站设置皮肤就行了；或者打个皮肤 Mod</p>
 
           <h3>9️⃣ 聊天消息验证失败</h3>
-          <p><strong>解药：</strong>装 No Chat Reports Mod（1.19.1+ 专属）。</p>
+          <p><strong>解药：</strong>安装禁用聊天举报 Mod（相关链接见群聊精华）</p>
 
-          <h3>🔟 Index *** out of bounds</h3>
-          <p><strong>两大元凶：</strong></p>
+          <h3>🔟 Index *** out of bounds for length ***</h3>
+          <p><strong>根因：</strong>程序访问超出数组长度的索引</p>
           <ul class="doc-list">
-            <li>用户名 &gt;16 位或含中文</li>
-            <li>某 Mod 代码越界 → 查日志 → 移除或反馈作者</li>
+            <li>用户名长度过长，正常用户名长度应该不超过 16 位，并且不应该出现中文</li>
+            <li>某个 Mod 存在漏洞，这个报错属于编程错误，请查看游戏日志，检查玩家进入时的报错，移除相关 Mod，有能力的话请反馈给 Mod 开发者</li>
           </ul>
 
-          <h3>1️⃣1️⃣ 数据包过大</h3>
-          <p><strong>常见三胞胎提示：</strong></p>
-          <ul class="doc-list">
-            <li>Tried to read NBT tag that was too big</li>
-            <li>Badly compressed packet</li>
-            <li>Packet too big</li>
-          </ul>
-          <p><strong>万能钥匙：</strong>装 Packet Fixer（群文件有最新版）。</p>
+          <h3>1️⃣1️⃣ 数据包过大可能的报错</h3>
+          <h4>11.1 读取过大的 NBT 标签时被踢出</h4>
+          <p><strong>提示：</strong>Tried to read NBT tag that was too big; tried to allocate: Xbytes where max allowed: 2097152；或是压缩后的数据包过大被踢出，提示 Badly compressed packet - size of X is larger than protocol maximum of 2097152</p>
 
-          <h3>1️⃣2️⃣ NAT 类型导致的联机噩梦</h3>
-          <h4>12.1 提升 NAT 等级</h4>
+          <h4>11.2 发包过大被踢出</h4>
+          <p><strong>提示：</strong>Attempted to send packet over maximum protocol size: 8388608 / Packet too big (is X, should be less than 8388608)；或是 Payload 过长被踢出，提示 Payload may not be larger than X bytes</p>
+          <p><strong>对策：</strong>可以安装 Mod 以修复此问题，详见群聊精华消息</p>
+
+          <h4>11.3 客户端 Connection Lost 错误</h4>
+          <p><strong>症状：</strong>服务器上的数据包发送失败或被拒绝，客户端可能会被断开连接</p>
+          <p><strong>对策：</strong>确保所有插件或 Mod 都是最新版本，有时这些问题可能由不兼容或过时的插件引起</p>
+
+          <h3>1️⃣2️⃣ NAT 类型导致的联机过慢或连接失败</h3>
+          <h4>12.1 提升 NAT 类型的途径和方法</h4>
           <ul class="doc-list">
-            <li><strong>光猫改桥接：</strong>拿到超管密码 → 切桥接 → 路由拨号</li>
-            <li><strong>路由开 uPnP / Full Cone / DMZ：</strong>把主机 IP 扔进 DMZ</li>
+            <li><strong>修改光猫工作模式：</strong>把光猫工作模式设置为桥接模式，这就是获取光猫超级密码的目的。无线路由器直接连到猫上就可以上网的，说明光猫是路由模式；无线路由器需要 PPPoE 拨号上网的就是桥接模式。</li>
+            <li><strong>更改路由器设置：</strong>如果无线路由器有启用 Full Cone、uPnP 等功能，果断启用。特别是启用 uPnP，绝大部分路由器都支持。另外大部分路由器都支持 DMZ，把你要提升 NAT 类型的主机 IP 地址设置好，设置之前把主机的 IP 设置为静态的。</li>
+            <li><strong>检查 Windows 系统服务：</strong>以下三个服务是否自动开启，如果未开启，则设置为自动启动。另外在系统防火墙将需要的程序添加例外：
+              <ul>
+                <li>Function Discovery Provider Host</li>
+                <li>Function Discovery Resource Publication</li>
+                <li>SSDP Discovery</li>
+              </ul>
+            </li>
           </ul>
           <div class="warning-box">
             <p>以上内容建议由专业人士操作，自行尝试与开发者无关。</p>
           </div>
-          <p><strong>图文教程 B 站直通车：</strong><a href="https://www.bilibili.com/opus/885294846817861638" target="_blank">bilibili.com/opus/885294846817861638</a></p>
+          <p><strong>图文教程：</strong><a href="https://www.bilibili.com/opus/885294846817861638" target="_blank">bilibili.com/opus/885294846817861638</a></p>
 
-          <h3>1️⃣3️⃣ java.lang.NullPointerException NBT 空指针</h3>
-          <p><strong>AI 速译：</strong></p>
+          <h3>1️⃣3️⃣ Internal Exception: java.lang.NullPointerException: Cannot invoke 'net.minecraft.nbt.CompoundTag.m_128459_(String)' because 'nbt' is null 或相似报错</h3>
+          <p><strong>AI 解答（仅供参考）：</strong>这个错误通常与 Minecraft 服务器的 NBT 数据格式有关，可能是因为某个操作尝试读取或修改一个空的 NBT 数据，导致空指针异常。具体原因可能有以下几种：</p>
           <ul class="doc-list">
-            <li>插件 / Mod 冲突 → 逐个禁用排查</li>
-            <li>世界数据损坏 → 用备份恢复或 NBT 修复工具</li>
-            <li>版本不兼容 → 统一服务端 / 客户端版本</li>
-            <li>配置错误 → 检查自定义 NBT 文件格式</li>
+            <li><strong>插件或 Mod 冲突：</strong>如果你安装了多个插件或 Mod，它们可能会互相冲突，导致 NBT 数据错误。你可以尝试禁用或删除最近添加的插件或 Mod，然后重新测试。</li>
+            <li><strong>世界数据损坏：</strong>如果你的世界文件损坏，可能导致 NBT 标签读取错误。你可以尝试通过备份恢复世界，或者用工具修复损坏的文件。</li>
+            <li><strong>版本不兼容：</strong>Minecraft 的不同版本可能在 NBT 标签的结构上有所变化。如果你的服务器版本和客户端版本不匹配，或者是你在使用某个不兼容的插件/Mod，可能会导致这个问题。确保你使用的所有插件和 Mod 与服务器版本兼容。</li>
+            <li><strong>配置文件问题：</strong>如果你使用的是自定义配置文件（比如某些插件或 Mod 需要的），确保配置文件的格式正确，没有缺失或错误的标签。</li>
           </ul>
 
-          <h3>1️⃣4️⃣ 软件已连接但游戏进不去</h3>
-          <p><strong>玄学解法：</strong></p>
-          <ul class="doc-list">
-            <li>刷新 DNS：<code>ipconfig /flushdns</code></li>
-            <li>重启工具 &amp; 游戏</li>
-            <li>再不行 → 复制日志找群主 ad1va</li>
-          </ul>
+          <h3>1️⃣4️⃣ 软件显示已连接但无法游玩？！</h3>
+          <p><strong>解决方法：</strong>刷新一下 DNS 试一下呢喵~~</p>
+          <p><code>ipconfig /flushdns</code></p>
 
-          <h3>1️⃣5️⃣ wait tcp handshake timeout / p2pTunnel listen error</h3>
-          <p><strong>症状：</strong>日志出现 wait tcp handshake timeout 或 p2pTunnel listen error</p>
+          <h3>1️⃣5️⃣ ERROR wait tcp handshake timeout / p2pTunnel listen error: wait tcp handshake timeout</h3>
           <p><strong>对策：</strong></p>
           <ul class="doc-list">
-            <li>确认使用的是最新版本</li>
-            <li>下载预览版尝试</li>
-            <li>运行软件自带的网络优化功能</li>
+            <li>确认自己用的是最新版，还是不行下载预览版或联系管理</li>
+            <li>运行软件自带的网络优化</li>
             <li>运行功能测试软件诊断问题</li>
           </ul>
 
-          <h3>1️⃣6️⃣ 游戏帧率周期性卡顿</h3>
-          <p><strong>症状：</strong>玩游戏时帧率隔一段时间忽然卡几下然后恢复正常</p>
+          <h3>1️⃣6️⃣ 玩游戏帧率隔一段时间忽然卡几下然后恢复正常</h3>
           <p><strong>对策：</strong>按 F3 观察右上角（分配给 Java 的）内存使用情况，如果经常超过 90%，请在启动器中增加分配的内存。</p>
 
-          <h3>1️⃣7️⃣ 第二次上线物品全部丢失</h3>
-          <p><strong>症状：</strong>朋友在第二次上线时发现物品全部丢失</p>
-          <p><strong>根因：</strong>使用了不同的名称加入联机，导致 UUID 发生变化</p>
-          <p><strong>对策：</strong>使用上次联机用的相同名称</p>
+          <h3>1️⃣7️⃣ 朋友在第二次上线时发现物品全部丢失</h3>
+          <p><strong>原因：</strong>使用了不同的名称加入联机导致 UUID 发生变化</p>
+          <p><strong>解决：</strong>使用上次联机用的名称</p>
 
-          <h3>1️⃣8️⃣ 支持其他游戏吗？</h3>
-          <p><strong>答：</strong>可以！在设置-兼容选项可以找到泰拉瑞亚。</p>
-          <p><strong>原理：</strong>理论上支持局域网联机的游戏都可以用此软件来辅助联机。</p>
+          <h3>1️⃣8️⃣ 这东西还能干其他的吗？</h3>
+          <p><strong>答：</strong>可以。在设置-兼容选项可以找到泰拉瑞亚。理论上支持局域网联机的游戏都可以用此软件来辅助联机。</p>
 
-          <h3>1️⃣9️⃣ IndexOutOfBoundsException 网络数据包错误</h3>
-          <p><strong>症状：</strong>报错 Internal Exception: io.netty.handler.codec.DecoderException: java.lang.IndexOutOfBoundsException</p>
-          <p><strong>根因：</strong>网络传输数据时出现问题，尝试读取超出了数据流的有效范围</p>
+          <h3>1️⃣9️⃣ Internal Exception: io.netty.handler.codec.DecoderException: java.lang.IndexOutOfBoundsException</h3>
+          <p><strong>完整报错：</strong>Internal Exception: io.netty.handler.codec.DecoderException: java.lang.IndexOutOfBoundsException: readerIndex(43150) + length(1) exceeds writerIndex(43150): UnpooledHeapByteBuf</p>
+          <p><strong>AI 解答（仅供参考）：</strong>这个错误通常出现在《我的世界》联机时，可能是由于网络传输数据时出现问题导致的。IndexOutOfBoundsException 说明尝试读取超出了数据流的有效范围。这可能是因为数据包被损坏、客户端和服务器之间的版本不匹配，或者是某些插件导致的。</p>
           <p><strong>对策：</strong></p>
           <ul class="doc-list">
-            <li>确保游戏版本匹配</li>
-            <li>检查网络连接稳定性</li>
-            <li>更新或重装游戏</li>
-            <li>检查插件或模组，尝试禁用排查</li>
-            <li>增加服务器端内存</li>
+            <li>确保你和你的朋友都在使用相同的游戏版本</li>
+            <li>检查网络连接是否稳定，网络波动可能导致数据包丢失或损坏</li>
+            <li>重新安装《我的世界》，确保游戏文件完整</li>
+            <li>检查安装的插件或模组，试着禁用它们排查问题</li>
+            <li>增加服务器端分配的内存</li>
           </ul>
 
-          <h3>2️⃣0️⃣ IPv4 显示为 0</h3>
-          <p><strong>症状：</strong>联机时 IPv4 死活为 0</p>
+          <h3>2️⃣0️⃣ 联机时 IPv4 死活为 0 的</h3>
           <p><strong>对策：</strong>找群主或管理下载特质版软件</p>
 
-          <h3>2️⃣1️⃣ 地区联机被阻断</h3>
-          <p><strong>症状：</strong>某些地区无法联机</p>
+          <h3>2️⃣1️⃣ 有关地区联机被阻断问题</h3>
           <p><strong>判断：</strong>观察日志是否出现了 P2P Login ERROR</p>
-          <p><strong>说明：</strong>此问题暂时无法解决，属于运营商阻断</p>
+          <p><strong>说明：</strong>此问题暂时无法解决</p>
 
-          <h3>2️⃣2️⃣ hasIPv4 和 UPNP 为 9</h3>
-          <p><strong>症状：</strong>日志中 hasIPv4 和 UPNP 显示为 9</p>
+          <h3>2️⃣2️⃣ 有不能链接或类似情况，日志中 hasIPv4 和 UPNP 为 9</h3>
           <p><strong>对策：</strong>请更新到软件最新版本</p>
 
-          <h3>2️⃣3️⃣ 缺少 DLL / 无法定位链接库</h3>
-          <p><strong>症状：</strong>出现"无法定位链接库""缺少 xxxxxxxx.dll"</p>
-          <p><strong>根因：</strong>缺少 .NET 运行库</p>
-          <p><strong>对策：</strong></p>
-          <ul class="doc-list">
-            <li><strong>0.0.7 用户：</strong>请先安装 .NET 8 Runtime</li>
-            <li><strong>旧版本用户：</strong>自行去微软官网安装 .NET Framework</li>
-          </ul>
+          <h3>2️⃣3️⃣ 出现"无法定位链接库""缺少 xxxxxxxx.dll"</h3>
+          <p><strong>根因：</strong>缺少 .NET Framework 运行库，自行去微软官网安装</p>
 
-          <h3>2️⃣4️⃣ HRESULT: 0x8007007A</h3>
-          <p><strong>症状：</strong>软件出现异常报错 HRESULT: 0x8007007A</p>
+          <h3>2️⃣4️⃣ 软件出现异常报错：HRESULT:0x8007007A</h3>
           <p><strong>对策：</strong></p>
           <ol class="doc-list">
-            <li>进入系统设置 → 时间和语言 → 语言和区域</li>
-            <li>点击"管理语言设置"</li>
-            <li>点击"更改系统区域设置"</li>
+            <li>进系统（Windows）设置 → 时间和语言 → 语言和区域 → 管理语言设置 → 更改系统区域设置</li>
             <li>把"Beta 版: 使用 Unicode UTF-8 提供全球语言支持"前的勾选取消</li>
           </ol>
 
+          <h3>2️⃣5️⃣ MCT 提示节点服务器连接失败的</h3>
+          <p><strong>说明：</strong>字面意思，你所在的地区的 P2P 服务器寄了，切换 Link 模式或者等</p>
+
           <h3>🆘 未收录的新问题</h3>
           <div class="warning-box">
-            <p>先按本文档走一遍 → 仍未解决 → <strong>带日志 + 截图</strong> 私聊技术支持人员。</p>
-            <p><strong>注意：</strong>出现在本文档的问题，优先按照本文档的步骤解决。如果问题未解决，再联系技术支持人员。</p>
+            <p><strong>如还有其他问题没有在此文档出现过：</strong></p>
+            <p>请优先使用 MCT AI（软件上栏从左往右第一个按钮）分析日志，还不行再改用群主 Ad1va 或其他在线管理员，会优先回复。</p>
+            <p><strong>注意：</strong>出现在这个文档的问题，优先按照本文档的步骤解决。如果问题未解决，再联系群主 ad1va 或其他在线管理员！</p>
           </div>
         </div>
 
