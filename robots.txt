@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://mct.mczlf.loft.games/sitemap.xml
+Sitemap: https://mct.loft.games/sitemap.xml
