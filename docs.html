@@ -83,9 +83,7 @@
           <h4>快速导航</h4>
           <ul>
             <li><a href="#quickstart" class="active">快速入门</a></li>
-            <li><a href="#p2p-guide">P2P 联机教程</a></li>
-            <li><a href="#et-guide">ET 房间模式</a></li>
-            <li><a href="#settings">设置说明</a></li>
+            <li><a href="#tutorial-guide">联机教程</a></li>
             <li><a href="#faq">常见问题</a></li>
             <li><a href="#troubleshoot">故障排查</a></li>
           </ul>
@@ -122,126 +120,15 @@
           </div>
         </div>
 
-        <!-- P2P Guide -->
-        <div class="doc-section anim-fade-up" id="p2p-guide">
-          <h2>P2P 联机教程</h2>
-          <p>P2P（点对点）模式是 MCT 的经典联机方案，基于 OpenP2P 实现 NAT 穿透打洞，适合大多数网络环境。</p>
-
-          <h3>房主操作</h3>
-          <ol class="doc-list">
-            <li>打开 MCT 联机工具，选择 <strong>P2P 联机</strong> 模式</li>
-            <li>点击 <strong>"创建房间"</strong> 按钮</li>
-            <li>程序会自动下载并启动 OpenP2P 核心</li>
-            <li>生成提示码后，将提示码分享给好友</li>
-            <li>在 Minecraft 中开放局域网世界，记录端口号</li>
-          </ol>
-
-          <h3>加入方操作</h3>
-          <ol class="doc-list">
-            <li>打开 MCT 联机工具，选择 <strong>P2P 联机</strong> 模式</li>
-            <li>点击 <strong>"加入房间"</strong> 按钮</li>
-            <li>输入房主分享的提示码</li>
-            <li>输入 Minecraft 局域网世界的端口号</li>
-            <li>等待连接成功，通过虚拟 IP 加入游戏</li>
-          </ol>
-
-          <div class="warning-box">
-            <strong>注意：</strong>如果一直显示"打洞中"，建议双方重启工具后重试，或尝试切换为 4G 热点网络。
-          </div>
-        </div>
-
-        <!-- ET Guide -->
-        <div class="doc-section anim-fade-up" id="et-guide">
-          <h2>ET 房间模式</h2>
-          <p>ET 房间模式是基于 EasyTier 的全新联机方案，采用 Scaffolding 协议实现虚拟局域网，适合复杂网络环境。</p>
-
-          <h3>创建房间</h3>
-          <ol class="doc-list">
-            <li>打开 MCT 联机工具，选择 <strong>ET 房间</strong> 模式</li>
-            <li>点击 <strong>"创建房间"</strong> 按钮</li>
-            <li>程序会自动获取公共节点列表</li>
-            <li>生成 Scaffolding 协议房间码</li>
-            <li>将房间码分享给好友</li>
-          </ol>
-
-          <h3>加入房间</h3>
-          <ol class="doc-list">
-            <li>打开 MCT 联机工具，选择 <strong>ET 房间</strong> 模式</li>
-            <li>点击 <strong>"加入房间"</strong> 按钮</li>
-            <li>输入房主分享的房间码</li>
-            <li>等待连接成功，查看虚拟 IP 列表</li>
-            <li>通过虚拟 IP 直接加入 Minecraft 游戏</li>
-          </ol>
-
-          <h3>玩家列表</h3>
-          <p>ET 房间模式支持实时玩家列表显示，你可以看到：</p>
-          <ul class="doc-list">
-            <li>当前房间所有玩家的虚拟 IP</li>
-            <li>每个玩家的实时 Ping 值</li>
-            <li>连接状态与网络质量</li>
-          </ul>
-        </div>
-
-        <!-- Settings -->
-        <div class="doc-section anim-fade-up" id="settings">
-          <h2>设置说明</h2>
-          <p>MCT 联机工具提供丰富的设置选项，满足不同用户的需求。</p>
-
-          <h3>网络设置</h3>
-          <table class="settings-table">
-            <thead>
-              <tr>
-                <th>设置项</th>
-                <th>说明</th>
-                <th>默认值</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>自定义端口</td>
-                <td>设置 Minecraft 局域网世界的端口号</td>
-                <td>自动检测</td>
-              </tr>
-              <tr>
-                <td>TCP/UDP 切换</td>
-                <td>选择连接使用的网络协议</td>
-                <td>TCP</td>
-              </tr>
-              <tr>
-                <td>管理员模式</td>
-                <td>提升程序权限以优化连接</td>
-                <td>提示</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3>高级设置</h3>
-          <table class="settings-table">
-            <thead>
-              <tr>
-                <th>设置项</th>
-                <th>说明</th>
-                <th>默认值</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Probe 探针</td>
-                <td>匿名上报版本号帮助开发者统计</td>
-                <td>开启</td>
-              </tr>
-              <tr>
-                <td>自定义提示码</td>
-                <td>设置个性化的房间提示码</td>
-                <td>随机生成</td>
-              </tr>
-              <tr>
-                <td>敏感词过滤</td>
-                <td>自动检测并过滤不当提示码</td>
-                <td>开启</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="doc-section anim-fade-up" id="tutorial-guide">
+          <a href="/tutorial" class="tutorial-docs-banner">
+            <span class="tutorial-docs-icon">🎮</span>
+            <span class="tutorial-docs-text">
+              <strong>联机教程已独立成页</strong>
+              <span>查看 P2P、ET 房间模式与完整联机流程</span>
+            </span>
+            <span class="tutorial-docs-arrow">前往教程 →</span>
+          </a>
         </div>
 
         <!-- FAQ - From Official Docs -->
