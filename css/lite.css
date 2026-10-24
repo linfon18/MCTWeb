@@ -156,6 +156,30 @@
   color: var(--ink-dim);
 }
 
+.lite-version-header + .lite-version-note {
+  margin-bottom: 1.5rem;
+}
+
+.lite-changelog {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: var(--glass-border);
+}
+
+.lite-changelog h4 {
+  color: var(--ink);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.lite-changelog ul {
+  padding-left: 1.25rem;
+  list-style: disc;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
 /* ===== Screenshots ===== */
 .lite-screenshots {
   margin-bottom: 2.5rem;
